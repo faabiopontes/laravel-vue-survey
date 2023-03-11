@@ -3,7 +3,8 @@ import DashboardView from '@/views/DashboardView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import SurveysView from '@/views/SurveysView.vue';
+import SurveysView from '@/views/SurveysView.vue'
+import { useUserStore } from '../stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,7 @@ const router = createRouter({
       redirect: '/dashboard',
       name: 'Dashboard',
       component: DefaultLayout,
+      meta: { requiresAuth: true },
       children: [
         { path: '/dashboard', name: 'Dashboard', component: DashboardView },
         { path: '/surveys', name: 'Surveys', component: SurveysView }
@@ -37,6 +39,18 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+
+  if (to.meta.requiresAuth && !userStore.user.token) {
+    next({ name: 'Login' })
+  } else if (userStore.user.token && (to.name === 'Login' || to.name === 'Register')) {
+    next({ name: 'Dashboard' })
+  } else {
+    next()
+  }
 })
 
 export default router
