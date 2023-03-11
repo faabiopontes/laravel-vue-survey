@@ -1,13 +1,25 @@
+import DashboardViewVue from '@/views/DashboardView.vue'
+import LoginViewVue from '@/views/LoginView.vue'
+import RegisterViewVue from '@/views/RegisterView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'Dashboard',
+      component: DashboardViewVue
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginViewVue
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: RegisterViewVue
     },
     {
       path: '/about',
