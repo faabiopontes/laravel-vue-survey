@@ -1,25 +1,32 @@
-import DashboardViewVue from '@/views/DashboardView.vue'
-import LoginViewVue from '@/views/LoginView.vue'
-import RegisterViewVue from '@/views/RegisterView.vue'
+import DefaultLayout from '@/components/DefaultLayout.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import SurveysView from '@/views/SurveysView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      redirect: '/dashboard',
       name: 'Dashboard',
-      component: DashboardViewVue
+      component: DefaultLayout,
+      children: [
+        { path: '/dashboard', name: 'Dashboard', component: DashboardView },
+        { path: '/surveys', name: 'Surveys', component: SurveysView }
+      ]
     },
     {
       path: '/login',
       name: 'Login',
-      component: LoginViewVue
+      component: LoginView
     },
     {
       path: '/register',
       name: 'Register',
-      component: RegisterViewVue
+      component: RegisterView
     },
     {
       path: '/about',
