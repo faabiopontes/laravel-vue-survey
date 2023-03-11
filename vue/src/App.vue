@@ -13,6 +13,9 @@ const name = userStore.user.name
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
       <p>Name: {{ name }}</p>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
